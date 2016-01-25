@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives: 2016/1 | 王放歌的博客</title>
+  <title>runTime之关联 | 王放歌的博客</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -84,7 +84,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -223,55 +223,70 @@
 
         <!-- ============================ END Hero Image =========================== -->
       
-
-
-<section id="services">
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/25/runTime之关联/">runTime之关联</a></h4>
-                            
-                            <p><time datetime="2016-01-25T03:35:38.000Z"><a href="/2016/01/25/runTime之关联/">2016-01-25</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/20/wfgmarkDown/">wfgmarkDown</a></h4>
-                            
-                            <p><time datetime="2016-01-20T14:18:53.000Z"><a href="/2016/01/20/wfgmarkDown/">2016-01-20</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/19/hello-world/">Hello World</a></h4>
-                            
-                            <p><time datetime="2016-01-19T14:18:15.000Z"><a href="/2016/01/19/hello-world/">2016-01-19</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-01-25T03:35:38.000Z" itemprop="datePublished">
+          2016-01-25
+      </time>
+    
+</span>
+                <h1>runTime之关联</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<h2 id="runTime_u521D_u5C1D_u8BD5_u2014-_u5173_u8054"><a href="#runTime_u521D_u5C1D_u8BD5_u2014-_u5173_u8054" class="headerlink" title="runTime初尝试—-关联"></a>runTime初尝试—-关联</h2><p>#关联<br>顾名思义就是将一个对象作为另一个对象的一部分，将他两动态的关联起来。好处就是不需要修改类的定义，就能为其增加储存空间。关联是基于key来绑定对象的，理论上是可以绑定无限个对象的。</p>
+<p>##创建关联（objc_setAssociatedObject）</p>
+<p>创建关联需要使用object-c运行时的函数，所以首先需要添加#import <objc runtime.h="">头文件，然后使用objc_setAssociatedObject函数，其中有4个参数，下面上代码，将一个字符串关联到数组上：</objc></p>
+<pre><code>//array为关联的源对象
+NSArray *array =@[@&quot;One&quot;, @&quot;Two&quot;, @&quot;Three&quot;];
+//overview为关联的对象
+NSString * overview = [[NSString alloc] initWithFormat:@&quot;%@&quot;,@&quot;First three numbers&quot;];
+//@&quot;wfg&quot;为关联的key，即关键字。
+//OBJC_ASSOCIATION_COPY_NONATOMIC为关联策略，关联策略表明了相关的对象是通过赋值，保留引用还是复制的方式进行关联的；还有这种关联是原子的还是非原子的，这个关联策略和声明属性时很类似。因为这个我关联的对象是nsstring所以用的copy
+objc_setAssociatedObject(array, @&quot;wfg&quot;, overview, OBJC_ASSOCIATION_COPY_NONATOMIC);
+</code></pre><p>##获取关联对象（objc_getAssociatedObject）<br>获取源对象上key对应的关联对象接上面的代码：</p>
+<pre><code>//objc_getAssociatedObject返回的对象为id型，所以需要强转为自己需要的类型
+//两个参数，分别为源对象和key
+NSString *associatedObject = (NSString *)objc_getAssociatedObject(array, @&quot;wfg&quot;);
+</code></pre><p>##断开关联<br>关联的断开，分成两种：</p>
+<ul>
+<li>部分关联的断开，用objc_setAssociatedObject方法将你想断开的key对应的关联对象设置为nil</li>
+<li>所有关联的断开，即对象关联状态的重置，使用objc_removeAssociatedObjects就可使对象初始到最开始的未关联状态。</li>
+</ul>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>虽然还没想好写点什么，但是总觉得这里放句话比较和谐。</p>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/01/20/wfgmarkDown/">
+        wfgmarkDown →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/01/25/runTime之关联/" data-title="runTime之关联" data-url="http://yoursite.com/2016/01/25/runTime之关联/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 
