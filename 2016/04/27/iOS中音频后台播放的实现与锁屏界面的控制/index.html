@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives | 王放歌的博客</title>
+  <title>iOS中音频后台播放的实现与锁屏界面的控制 | 王放歌的博客</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -84,7 +84,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -223,64 +223,173 @@
 
         <!-- ============================ END Hero Image =========================== -->
       
-
-
-<section id="services">
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/04/27/iOS中音频后台播放的实现与锁屏界面的控制/">iOS中音频后台播放的实现与锁屏界面的控制</a></h4>
-                            
-                            <p><time datetime="2016-04-27T03:23:56.000Z"><a href="/2016/04/27/iOS中音频后台播放的实现与锁屏界面的控制/">2016-04-27</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/25/runTime之关联/">runTime之关联</a></h4>
-                            
-                            <p><time datetime="2016-01-25T03:35:38.000Z"><a href="/2016/01/25/runTime之关联/">2016-01-25</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/20/wfgmarkDown/">wfgmarkDown</a></h4>
-                            
-                            <p><time datetime="2016-01-20T14:18:53.000Z"><a href="/2016/01/20/wfgmarkDown/">2016-01-20</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/19/hello-world/">Hello World</a></h4>
-                            
-                            <p><time datetime="2016-01-19T14:18:15.000Z"><a href="/2016/01/19/hello-world/">2016-01-19</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-04-27T03:23:56.000Z" itemprop="datePublished">
+          2016-04-27
+      </time>
+    
+</span>
+                <h1>iOS中音频后台播放的实现与锁屏界面的控制</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<h2 id="How_to_handle_background_audio_playing_while_iOS_device_is_locked_or_on_another_application_3F"><a href="#How_to_handle_background_audio_playing_while_iOS_device_is_locked_or_on_another_application_3F" class="headerlink" title="How to handle background audio playing while iOS device is locked or on another application?"></a>How to handle background audio playing while iOS device is locked or on another application?</h2><h1 id="iOS_u4E2D_u5B9E_u73B0_u97F3_u9891_u7684_u540E_u53F0_u64AD_u653E"><a href="#iOS_u4E2D_u5B9E_u73B0_u97F3_u9891_u7684_u540E_u53F0_u64AD_u653E" class="headerlink" title="iOS中实现音频的后台播放"></a>iOS中实现音频的后台播放</h1><p>最近因为一个项目优化的事情需要完成听书音频后台的持续播放，和锁屏界面的控制，网上查了一些资料，都是属于比较老的，也是遇到了不少坑，自己记录一下遇到的一些问题和解决方法。</p>
+<h2 id="u9996_u5148_u6DFB_u52A0_u652F_u6301_u5E93_u548C_u7CFB_u7EDF_u914D_u7F6E"><a href="#u9996_u5148_u6DFB_u52A0_u652F_u6301_u5E93_u548C_u7CFB_u7EDF_u914D_u7F6E" class="headerlink" title="首先添加支持库和系统配置"></a>首先添加支持库和系统配置</h2><p>我查到的首先是需要在Info.plist里加上UIBackgroundModes再到里面加上audio这个属性，我发现这个在现在iOS9并不需要，真正需要做的是到Capabilities下的BackgroundModes中打开Audio，AirPlay and Picture in Picture</p>
+<p>如下图<br><img src="http://i.stack.imgur.com/35mLY.png title" alt="ale title">;</p>
+<p>支持库呢就没太大出入，一共三个支持库:</p>
+<ul>
+<li>MediaPlayer.framework</li>
+<li>CoreMedia.framework</li>
+<li>AVFoundation.framework</li>
+</ul>
+<p>到这里准备工作就做完了，下面上具体代码</p>
+<h2 id="u672C_u5C31_u97F3_u4E50_u6587_u4EF6_u540E_u53F0_u64AD_u653E_u7684_u5B9E_u73B0"><a href="#u672C_u5C31_u97F3_u4E50_u6587_u4EF6_u540E_u53F0_u64AD_u653E_u7684_u5B9E_u73B0" class="headerlink" title="本就音乐文件后台播放的实现"></a>本就音乐文件后台播放的实现</h2><p>首先当然是在AppDelegate里加入#import <avfoundation avfoundation.h="">框架然后：</avfoundation></p>
+<pre><code>- (void)applicationWillResignActive:(UIApplication *)application {
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>虽然还没想好写点什么，但是总觉得这里放句话比较和谐。</p>
+//将要进入后台
+//开启后台处理多媒体事件
+[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+AVAudioSession *session=[AVAudioSession sharedInstance];
+[session setActive:YES error:nil];
+//后台播放
+[session setCategory:AVAudioSessionCategoryPlayback error:nil];
+}
+</code></pre><p>这样就能实现最简单的本地音频后台播放，但是不能持续播放网络音频和锁屏控制（即远程控制），我们一个一个来实现</p>
+<h3 id="u6301_u7EED_u64AD_u653E_u7F51_u7EDC_u97F3_u9891"><a href="#u6301_u7EED_u64AD_u653E_u7F51_u7EDC_u97F3_u9891" class="headerlink" title="持续播放网络音频"></a>持续播放网络音频</h3><p>若需要持续播放网络歌曲，还需要申请后台任务id，具体做法是:</p>
+<pre><code>    //首先给AppDelegate添加一条TaskId属性
+    @property (nonatomic,assign) UIBackgroundTaskIdentifier FGTaskId;
+
+
+    //自定义一个backgroundPlayerID方法如下：
+
+    + (UIBackgroundTaskIdentifier)backgroundPlayerID:(UIBackgroundTaskIdentifier)backTaskId {
+
+//设置并激活音频会话类别
+AVAudioSession *session=[AVAudioSession sharedInstance];
+
+[session setCategory:AVAudioSessionCategoryPlayback error:nil];
+[session setActive:YES error:nil];
+
+//设置后台任务ID
+UIBackgroundTaskIdentifier newTaskId=UIBackgroundTaskInvalid;
+newTaskId=[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+if(newTaskId!=UIBackgroundTaskInvalid&amp;&amp;backTaskId!=UIBackgroundTaskInvalid)
+{
+    [[UIApplication sharedApplication] endBackgroundTask:backTaskId];
+}
+return newTaskId;
+}
+</code></pre><p>然后在applicationWillResignActive中调用我们的方法</p>
+<pre><code>- (void)applicationWillResignActive:(UIApplication *)application {
+
+//将要进入后台
+//开启后台处理多媒体事件
+[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+AVAudioSession *session=[AVAudioSession sharedInstance];
+[session setActive:YES error:nil];
+//后台播放
+[session setCategory:AVAudioSessionCategoryPlayback error:nil];
+
+//需要持续播放网络歌曲，还需要申请后台任务id，具体做法如下:
+
+_bgTaskId = [AppDelegate backgroundPlayerID:_bgTaskId];
+
+//其中的_bgTaskId是后台任务UIBackgroundTaskIdentifier _bgTaskId;
+
+}
+</code></pre><p>这样我们就实现网络音频的后台播放啦~</p>
+<h3 id="u9501_u5C4F_u63A7_u5236"><a href="#u9501_u5C4F_u63A7_u5236" class="headerlink" title="锁屏控制"></a>锁屏控制</h3><p>需要实现远程控制则要在你的播放控制器实现remoteControlReceivedWithEvent这个方法，具体如下：</p>
+<pre><code>    #pragma mark 后台的一些处理操作
+- (void)remoteControlReceivedWithEvent:(UIEvent *)event
+{
+if (event.type == UIEventTypeRemoteControl) {
+
+    if (event.subtype == UIEventSubtypeRemoteControlPlay || event.subtype ==UIEventSubtypeRemoteControlPause) {
+
+        //暂停开始按钮调用方法
+        [[FGPlayNews sharedFGPlayNews] startToPlay];
+
+    } else if (event.subtype == UIEventSubtypeRemoteControlNextTrack){
+        //下一首按钮调用方法
+        [[FGPlayNews sharedFGPlayNews] nextMusic];
+
+
+    }else if(event.subtype == UIEventSubtypeRemoteControlPreviousTrack)
+    {
+        //上一首按钮调用方法
+        [[FGPlayNews sharedFGPlayNews] preMusic];
+    }
+
+}
+}
+</code></pre><p>然后还要在AppDelegate的applicationDidEnterBackground实现允许远程控制的代码如下：</p>
+<pre><code>    - (void)applicationDidEnterBackground:(UIApplication *)application {
+//进入后台
+[application beginReceivingRemoteControlEvents];
+
+}
+</code></pre><p>现在就能实现网络歌曲后台播放和锁屏的时候远程控制啦~当然还没完，我们在锁屏下并不知当前播放的音频名字和图片，如果需要加入名字和图片则需要实现configNowPlayingInfoCenter方法代码如下，当然首先要添加头文件 #import <mediaplayer mediaplayer.h=""> ：</mediaplayer></p>
+<pre><code>    - (void)configNowPlayingInfoCenter {
+
+if (NSClassFromString(@&quot;MPNowPlayingInfoCenter&quot;)) {
+
+    NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+
+    [dict setObject:@&quot;王放歌的歌&quot; forKey:MPMediaItemPropertyTitle];
+
+    [dict setObject:@&quot;王放歌&quot; forKey:MPMediaItemPropertyArtist];
+
+    //添加背景图片
+    MPMediaItemArtwork * mArt = [[MPMediaItemArtwork alloc] initWithImage:self.image];
+
+    [dict setObject:mArt forKey:MPMediaItemPropertyArtwork];
+
+    [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo = nil;
+
+    [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
+
+    }
+    /*
+    具体需要显示什么可以自己添加
+    */
+
+}
+</code></pre><p>在configNowPlayingInfoCenter的方法实现了之后，在每次换音频的时候都需要重新调用一次这个方法，刷新信息，差不多到这里基本功能都实现了，具体更深入的可以找博主探讨~</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/01/25/runTime之关联/">
+        runTime之关联 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/04/27/iOS中音频后台播放的实现与锁屏界面的控制/" data-title="iOS中音频后台播放的实现与锁屏界面的控制" data-url="http://yoursite.com/2016/04/27/iOS中音频后台播放的实现与锁屏界面的控制/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 
