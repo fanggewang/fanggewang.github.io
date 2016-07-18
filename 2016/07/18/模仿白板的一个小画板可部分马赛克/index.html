@@ -4,21 +4,72 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>runTime之关联 | 王放歌的博客</title>
+  <title>模仿白板的一个小画板可部分马赛克 | 王放歌的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="runTime初尝试—-关联关联顾名思义就是将一个对象作为另一个对象的一部分，将他两动态的关联起来。好处就是不需要修改类的定义，就能为其增加储存空间。关联是基于key来绑定对象的，理论上是可以绑定无限个对象的。
-创建关联（objc_setAssociatedObject）创建关联需要使用object-c运行时的函数，所以首先需要添加#import 头文件，然后使用objc_setAssociate">
+  <meta name="description" content="##FGDrawingBoard
+这是一个简单的画板，可以改变画笔粗细，可以改变画笔的颜色，橡皮擦功能的实现，图片做简单的涂抹生成马赛克，截屏保存到本地等功能，希望对大家有帮助。
+###自由画笔
+画板界面
+
+自由绘图
+
+###添加本地图片
+添加本地图片并部分打马赛克
+
+图片与自由画笔结合
+
+将完成的图片保存到本地
+
+###保存到本地后生成的图片
+
+demo下载">
 <meta property="og:type" content="article">
-<meta property="og:title" content="runTime之关联">
-<meta property="og:url" content="http://yoursite.com/2016/01/25/runTime之关联/index.html">
+<meta property="og:title" content="模仿白板的一个小画板可部分马赛克">
+<meta property="og:url" content="http://yoursite.com/2016/07/18/模仿白板的一个小画板可部分马赛克/index.html">
 <meta property="og:site_name" content="王放歌的博客">
-<meta property="og:description" content="runTime初尝试—-关联关联顾名思义就是将一个对象作为另一个对象的一部分，将他两动态的关联起来。好处就是不需要修改类的定义，就能为其增加储存空间。关联是基于key来绑定对象的，理论上是可以绑定无限个对象的。
-创建关联（objc_setAssociatedObject）创建关联需要使用object-c运行时的函数，所以首先需要添加#import 头文件，然后使用objc_setAssociate">
-<meta property="og:updated_time" content="2016-01-25T04:21:52.000Z">
+<meta property="og:description" content="##FGDrawingBoard
+这是一个简单的画板，可以改变画笔粗细，可以改变画笔的颜色，橡皮擦功能的实现，图片做简单的涂抹生成马赛克，截屏保存到本地等功能，希望对大家有帮助。
+###自由画笔
+画板界面
+
+自由绘图
+
+###添加本地图片
+添加本地图片并部分打马赛克
+
+图片与自由画笔结合
+
+将完成的图片保存到本地
+
+###保存到本地后生成的图片
+
+demo下载">
+<meta property="og:image" content="https://github.com/fanggewang/FGDrawingBoard/blob/master/1.PNG?raw=true">
+<meta property="og:image" content="https://github.com/fanggewang/FGDrawingBoard/blob/master/2.PNG?raw=true">
+<meta property="og:image" content="https://github.com/fanggewang/FGDrawingBoard/blob/master/3.PNG?raw=true">
+<meta property="og:image" content="https://github.com/fanggewang/FGDrawingBoard/blob/master/4.PNG?raw=true">
+<meta property="og:image" content="https://github.com/fanggewang/FGDrawingBoard/blob/master/5.PNG?raw=true">
+<meta property="og:image" content="https://github.com/fanggewang/FGDrawingBoard/blob/master/6.JPG?raw=true">
+<meta property="og:updated_time" content="2016-07-18T08:23:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="runTime之关联">
-<meta name="twitter:description" content="runTime初尝试—-关联关联顾名思义就是将一个对象作为另一个对象的一部分，将他两动态的关联起来。好处就是不需要修改类的定义，就能为其增加储存空间。关联是基于key来绑定对象的，理论上是可以绑定无限个对象的。
-创建关联（objc_setAssociatedObject）创建关联需要使用object-c运行时的函数，所以首先需要添加#import 头文件，然后使用objc_setAssociate">
+<meta name="twitter:title" content="模仿白板的一个小画板可部分马赛克">
+<meta name="twitter:description" content="##FGDrawingBoard
+这是一个简单的画板，可以改变画笔粗细，可以改变画笔的颜色，橡皮擦功能的实现，图片做简单的涂抹生成马赛克，截屏保存到本地等功能，希望对大家有帮助。
+###自由画笔
+画板界面
+
+自由绘图
+
+###添加本地图片
+添加本地图片并部分打马赛克
+
+图片与自由画笔结合
+
+将完成的图片保存到本地
+
+###保存到本地后生成的图片
+
+demo下载">
   
     <link rel="alternative" href="/atom.xml" title="王放歌的博客" type="application/atom+xml">
   
@@ -200,11 +251,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-runTime之关联" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-模仿白板的一个小画板可部分马赛克" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/01/25/runTime之关联/" class="article-date">
-  	<time datetime="2016-01-25T03:35:38.000Z" itemprop="datePublished">2016-01-25</time>
+      <a href="/2016/07/18/模仿白板的一个小画板可部分马赛克/" class="article-date">
+  	<time datetime="2016-07-18T08:19:00.000Z" itemprop="datePublished">2016-07-18</time>
 </a>
     </div>
   
@@ -217,7 +268,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      runTime之关联
+      模仿白板的一个小画板可部分马赛克
     </h1>
   
 
@@ -233,24 +284,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="runTime_u521D_u5C1D_u8BD5_u2014-_u5173_u8054"><a href="#runTime_u521D_u5C1D_u8BD5_u2014-_u5173_u8054" class="headerlink" title="runTime初尝试—-关联"></a>runTime初尝试—-关联</h2><h1 id="u5173_u8054"><a href="#u5173_u8054" class="headerlink" title="关联"></a>关联</h1><p>顾名思义就是将一个对象作为另一个对象的一部分，将他两动态的关联起来。好处就是不需要修改类的定义，就能为其增加储存空间。关联是基于key来绑定对象的，理论上是可以绑定无限个对象的。</p>
-<h2 id="u521B_u5EFA_u5173_u8054_uFF08objc_setAssociatedObject_uFF09"><a href="#u521B_u5EFA_u5173_u8054_uFF08objc_setAssociatedObject_uFF09" class="headerlink" title="创建关联（objc_setAssociatedObject）"></a>创建关联（objc_setAssociatedObject）</h2><p>创建关联需要使用object-c运行时的函数，所以首先需要添加#import <objc runtime.h="">头文件，然后使用objc_setAssociatedObject函数，其中有4个参数，下面上代码，将一个字符串关联到数组上：</objc></p>
-<pre><code>//array为关联的源对象
-NSArray *array =@[@&quot;One&quot;, @&quot;Two&quot;, @&quot;Three&quot;];
-//overview为关联的对象
-NSString * overview = [[NSString alloc] initWithFormat:@&quot;%@&quot;,@&quot;First three numbers&quot;];
-//@&quot;wfg&quot;为关联的key，即关键字。
-//OBJC_ASSOCIATION_COPY_NONATOMIC为关联策略，关联策略表明了相关的对象是通过赋值，保留引用还是复制的方式进行关联的；还有这种关联是原子的还是非原子的，这个关联策略和声明属性时很类似。因为这个我关联的对象是nsstring所以用的copy
-objc_setAssociatedObject(array, @&quot;wfg&quot;, overview, OBJC_ASSOCIATION_COPY_NONATOMIC);
-</code></pre><h2 id="u83B7_u53D6_u5173_u8054_u5BF9_u8C61_uFF08objc_getAssociatedObject_uFF09"><a href="#u83B7_u53D6_u5173_u8054_u5BF9_u8C61_uFF08objc_getAssociatedObject_uFF09" class="headerlink" title="获取关联对象（objc_getAssociatedObject）"></a>获取关联对象（objc_getAssociatedObject）</h2><p>获取源对象上key对应的关联对象接上面的代码：</p>
-<pre><code>//objc_getAssociatedObject返回的对象为id型，所以需要强转为自己需要的类型
-//两个参数，分别为源对象和key
-NSString *associatedObject = (NSString *)objc_getAssociatedObject(array, @&quot;wfg&quot;);
-</code></pre><h2 id="u65AD_u5F00_u5173_u8054"><a href="#u65AD_u5F00_u5173_u8054" class="headerlink" title="断开关联"></a>断开关联</h2><p>关联的断开，分成两种：</p>
-<ul>
-<li>部分关联的断开，用objc_setAssociatedObject方法将你想断开的key对应的关联对象设置为nil</li>
-<li>所有关联的断开，即对象关联状态的重置，使用objc_removeAssociatedObjects就可使对象初始到最开始的未关联状态。</li>
-</ul>
+        <p>##FGDrawingBoard</p>
+<p>这是一个简单的画板，可以改变画笔粗细，可以改变画笔的颜色，橡皮擦功能的实现，图片做简单的涂抹生成马赛克，截屏保存到本地等功能，希望对大家有帮助。</p>
+<p>###自由画笔</p>
+<p>画板界面</p>
+<p><img src="https://github.com/fanggewang/FGDrawingBoard/blob/master/1.PNG?raw=true" alt="image"></p>
+<p>自由绘图</p>
+<p><img src="https://github.com/fanggewang/FGDrawingBoard/blob/master/2.PNG?raw=true" alt="image"></p>
+<p>###添加本地图片</p>
+<p>添加本地图片并部分打马赛克</p>
+<p><img src="https://github.com/fanggewang/FGDrawingBoard/blob/master/3.PNG?raw=true" alt="image"></p>
+<p>图片与自由画笔结合</p>
+<p><img src="https://github.com/fanggewang/FGDrawingBoard/blob/master/4.PNG?raw=true" alt="image"></p>
+<p>将完成的图片保存到本地</p>
+<p><img src="https://github.com/fanggewang/FGDrawingBoard/blob/master/5.PNG?raw=true" alt="image"></p>
+<p>###保存到本地后生成的图片</p>
+<p><img src="https://github.com/fanggewang/FGDrawingBoard/blob/master/6.JPG?raw=true" alt="image"></p>
+<p><a href="https://github.com/fanggewang/FGDrawingBoard" target="_blank" rel="external">demo下载</a></p>
 
       
     </div>
@@ -260,18 +310,9 @@ NSString *associatedObject = (NSString *)objc_getAssociatedObject(array, @&quot;
     
 <nav id="article-nav">
   
-    <a href="/2016/04/27/iOS中音频后台播放的实现与锁屏界面的控制/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          iOS中音频后台播放的实现与锁屏界面的控制
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/01/20/wfgmarkDown/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">wfgmarkDown</div>
+    <a href="/2016/04/27/iOS中音频后台播放的实现与锁屏界面的控制/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS中音频后台播放的实现与锁屏界面的控制</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -306,7 +347,7 @@ NSString *associatedObject = (NSString *)objc_getAssociatedObject(array, @&quot;
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="runTime之关联" data-title="runTime之关联" data-url="http://yoursite.com/2016/01/25/runTime之关联/"></div>
+	<div class="ds-thread" data-thread-key="模仿白板的一个小画板可部分马赛克" data-title="模仿白板的一个小画板可部分马赛克" data-url="http://yoursite.com/2016/07/18/模仿白板的一个小画板可部分马赛克/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
